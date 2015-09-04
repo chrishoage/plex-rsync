@@ -2,7 +2,6 @@ import * as MediaTypes from 'constants/MediaTypes'
 import {createAction} from 'redux-actions'
 import axios from 'axios'
 import { fromJS } from 'immutable'
-import { pickDeep } from 'utils/functions'
 import * as WebAPI from 'utils/WebAPI'
 import {
           ADD_MEDIA,
