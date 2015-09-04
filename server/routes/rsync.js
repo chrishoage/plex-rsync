@@ -85,7 +85,7 @@ export function create({body, app}, res) {
       opts.source = Array.isArray(opts.source) ? opts.source : []
       opts.include = Array.isArray(opts.include) ? opts.include : []
       const fixedMount = mount + '/'
-      const source = 'minicenter@192.168.1.10:' + fixedMount
+      const source = fixedMount
       if (!opts.source.includes(source)) {
         opts.source.push(source)
       }
