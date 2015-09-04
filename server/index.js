@@ -36,28 +36,3 @@ const {
 server.listen(port, host, () => {
   console.log('Api listening at http://%s:%s', host, port)
 })
-
-// if (process.env.NODE_ENV !== 'production') {
-//   const webpack = require('webpack')
-//   const WebpackDevServer = require('webpack-dev-server')
-//   const webpackConfig = require('../webpack.config')
-
-//   new WebpackDevServer(webpack(webpackConfig), {
-//     publicPath: '/public/',
-//     contentBase:'/public/',
-//     inline: true,
-//     hot: true,
-//     stats: true,
-//     historyApiFallback: true,
-//     headers: {
-//       'Access-Control-Allow-Origin': `http://${host}:${port}`,
-//       'Access-Control-Allow-Headers': 'X-Requested-With'
-//     }
-//   }).listen(3000, 'localhost', (err) => {
-//     if (err) {
-//       console.log(err)
-//     }
-
-//     console.log('webpack dev server listening on localhost:3000')
-//   })
-// }

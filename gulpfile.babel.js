@@ -8,7 +8,7 @@ import runSequence from 'run-sequence'
 import eslint from 'gulp-eslint'
 import nodemon from 'gulp-nodemon'
 import webpack from 'webpack'
-import WebpackServer from 'webpack-dev-server'
+import WebpackServer from 'webpack-hot-server'
 import ExtractTextPlugin from 'extract-text-webpack-plugin'
 
 const {
@@ -49,7 +49,7 @@ function generateWebpackConfig(env) {
       loaders: [{
         test: /.js?$/,
         exclude: /(node_modules|bower_components)/,
-        loaders: ['babel?stage=0&optional[]=runtime'],
+        loader: 'babel',
         include: fullPath(paths.js)
       }, {
         test: /.json$/,
@@ -75,17 +75,16 @@ function generateWebpackConfig(env) {
       const webpackDevConfig = deepMergeClone(webpackBaseConfig, {
         devtool: 'cheap-module-eval-source-map',
         debug: true,
-        entry: [`webpack-dev-server/client?http://${HOST}:${PORT}`, 'webpack/hot/only-dev-server'],
-        output: {
-          publicPath: `http://${HOST}:${PORT}/${paths.output}/`
+        entry: [`webpack-hot-server/client?path=http://${HOST}:${WEBPACK_PORT}/__webpack_hmr`],
+         output: {
+          publicPath: `http://${HOST}:${WEBPACK_PORT}/${paths.output}/`
         },
-        plugins: [new webpack.HotModuleReplacementPlugin()],
+        plugins: [
+          new webpack.optimize.OccurenceOrderPlugin(),
+          new webpack.HotModuleReplacementPlugin()
+        ],
         module: {
           loaders: [
-            {
-              test: /.js?$/,
-              loader: 'react-hot'
-            },
             // {
             //   test: /\.scss$/,
             //   loader: 'style!css!autoprefixer!sass?includePaths[]=' + fullPath(paths.scss)
@@ -99,7 +98,6 @@ function generateWebpackConfig(env) {
       const webpackProdConfig = deepMergeClone(webpackBaseConfig, {
         plugins: [
           new webpack.optimize.DedupePlugin(),
-          new webpack.optimize.OccurenceOrderPlugin(),
           new webpack.optimize.UglifyJsPlugin(),
           // new ExtractTextPlugin('styles.css')
         ],
@@ -141,19 +139,13 @@ gulp.task('webpack', (callback) => {
 
 gulp.task('webpack-server', () => {
   new WebpackServer(webpack(webpackConfig), {
-    publicPath: `/${paths.output}/`,
+    publicPath: webpackConfig.output.publicPath,
     contentBase: fullPath(paths.dist),
-    inline: true,
     hot: !isProd,
-    stats: true,
-    historyApiFallback: true,
-    headers: {
-      'Access-Control-Allow-Origin': `http://${HOST}:${PORT}`,
-      'Access-Control-Allow-Headers': 'X-Requested-With'
-    }
+    stats: true
   }).listen(WEBPACK_PORT, HOST, (err) => {
     if (err) throw new gutil.PluginError('webpack', err)
-    gutil.log('[webpack-server]', 'listening on', gutil.colors.cyan(`http://${HOST}:${PORT}`))
+    gutil.log('[webpack-server]', 'listening on', gutil.colors.cyan(`http://${HOST}:${WEBPACK_PORT}`))
   })
 })
 
