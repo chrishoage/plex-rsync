@@ -25,19 +25,25 @@ process.on('exit', quitting) // run signal handler when main process exits
 
 const BASE_PATH = '/Volumes'
 
+function saveEmitUpdate(id, job, io) {
+  jobs.set(id, job)
+  io.emit('message', {
+    type: 'PROGRESS_UPDATE',
+    payload: job
+  })
+}
+
 function startJob(opts, io) {
   const rsync = Rsync.build(opts)
   const rsyncCommand = rsync.command()
 
   const rsyncJob = rsync.execute((error) => {
     const job = jobs.get(id)
-    job.status = 'COMPLETED'
+    if (job.status !== 'ERROR') {
+      job.status = 'COMPLETED'
+    }
     if (jobObjects.has(pid)) jobObjects.delete(pid)
-    io.emit('message', {
-      type: 'PROGRESS_UPDATE',
-      payload: job
-    })
-    jobs.set(id, job)
+    saveEmitUpdate(id, job, io)
   }, (stdout) => {
     const job = jobs.get(id)
     const line = new Buffer(stdout).toString()
@@ -46,13 +52,15 @@ function startJob(opts, io) {
     if (job.status === 'PREPARING') {
       job.status = 'TRANSFERING'
     }
-    io.emit('message', {
-      type: 'PROGRESS_UPDATE',
-      payload: job
-    })
-    jobs.set(id, job)
+    saveEmitUpdate(id, job, io)
   }, (stderr) => {
-    console.log(new Buffer(stderr).toString())
+    const job = jobs.get(id)
+    const line = new Buffer(stderr).toString()
+    console.log(line)
+    job.status = 'ERROR'
+    job.output += line
+    if (jobObjects.has(pid)) jobObjects.delete(pid)
+    saveEmitUpdate(id, job, io)
   })
 
   const { pid } = rsyncJob
