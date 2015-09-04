@@ -1,7 +1,6 @@
 const {
-  HOST = '0.0.0.0',
-  PORT = 8888,
-  WEBPACK_PORT = PORT,
+  HOST = 'localhost',
+  WEBPACK_PORT = 3000,
   NODE_ENV = 'production'
 } = process.env
 

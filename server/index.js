@@ -5,7 +5,7 @@ import bodyParser from 'body-parser'
 import * as routes from './routes'
 
 const {
-  HOST = '0.0.0.0',
+  HOST = 'localhost',
   PORT = 8888
 } = process.env
 
