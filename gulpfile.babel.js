@@ -154,7 +154,12 @@ gulp.task('server', () => {
     script: './index.js',
     ext: 'js',
     ignore: [`${paths.js}/`, './node_modules/', 'gulpfile.babel.js', 'package.json'],
-    env: process.env
+    env: Object.assign({}, process.env, {
+      NODE_ENV,
+      HOST,
+      PORT,
+      WEBPACK_PORT
+    })
   })
 })
 
