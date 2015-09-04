@@ -16,3 +16,4 @@ This project currently fits my specific use case only. I plan on flushing it out
 5. Clean up UX. I have thrown this together mostly thinking only about code. Would welcome suggestions.
 6. Add tests
 7. Allow failed rsync jobs to be restarted/resumed
+8. Move plex config to settings tab in app.
