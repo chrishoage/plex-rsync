@@ -10,7 +10,7 @@ export function startJob(partsList, destPath) {
   return axios.post('/api/rsync', {
     partsList,
     destPath
-  })
+  }).then((res) =>  normalizers.job(res.data))
 }
 
 export function removeJob(jobId) {

@@ -21,7 +21,8 @@ export function startJob() {
     }).toJS()
     const { dest: { path: destPath } } = state
     console.log('partsList', partsList, destPath)
-    return WebAPI.startJob(partsList, destPath)
+    dispatch(requestSync({partsList, destPath}))
+    return WebAPI.startJob(partsList, destPath).then((data) => dispatch(reciveSync(data)))
   }
 }
 

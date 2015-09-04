@@ -59,6 +59,8 @@ export function copyKeys(state = new Set(), {type, payload}) {
       return state.union(payload.keys)
     case ActionTypes.REMOVE_MEDIA:
       return state.subtract(payload.keys)
+    case ActionTypes.RECIVE_START_JOB:
+      return state.clear()
     default:
       return state
   }

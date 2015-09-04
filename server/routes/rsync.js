@@ -98,8 +98,8 @@ export function create({body, app}, res) {
     rsyncOpts.shell = 'ssh'
     rsyncOpts.flags = ['a', 'v', 'z', 'm', 'stats', 'progress'] // dry 'n',
     rsyncOpts.destination = path.join(BASE_PATH, destPath)
-    const rsyncPid = startJob(rsyncOpts, app.get('socketio'))
-    res.json({rsyncOpts, rsyncPid})
+    const job = startJob(rsyncOpts, app.get('socketio'))
+    res.json(job)
   })
 
 }
