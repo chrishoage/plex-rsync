@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { merge } from 'lodash'
+import merge from 'lodash.merge'
 import * as normalizers from './normalizers'
 
 export function fetchJobs() {
