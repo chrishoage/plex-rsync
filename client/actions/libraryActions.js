@@ -71,6 +71,10 @@ const pickKeys = (videos, metadataId, videoType) => {
 
 export const addMedia = createAction(ADD_MEDIA)
 
+// Add Videos with media/parts to stage for copy
+// The Plex API does not include grandparent and parent key's on the season listing
+// so we have to fetch each individual metadata to get full information.
+// This could be simplified if the Plex API were consistent in the data it return
 export function addAllMedia(metadataId) {
 
   return (dispatch, getState) => {

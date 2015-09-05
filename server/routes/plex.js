@@ -5,6 +5,9 @@ import plexConfig from '../../plex.config.json'
 
 const client = new PlexAPI(plexConfig)
 
+// Normalize XML JSON by mapping the element type to a
+// pluralized property and adding children as array values.
+// This is because the JSON from the Plex API is just XML auto converted to JSON.
 function reduceChildren(children = []) {
   return children.reduce((props, child) => {
     const { _elementType, _children, ...rest} = child
@@ -20,7 +23,7 @@ function reduceChildren(children = []) {
   }, {})
 }
 
-
+// Proxy request to Plex API
 export function get({params, query}, res) {
   const querystring = qs.stringify(query)
   client.query(`/${Object.keys(params).map((key) => params[key]).join('/')}?${querystring}`, query).then((results) => {

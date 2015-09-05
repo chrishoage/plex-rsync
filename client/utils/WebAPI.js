@@ -38,6 +38,8 @@ export function fetchMetadataChildren(id) {
               .then((data) => normalizers.mediaContainer(data))
 }
 
+// We must fetch the top level metadata and its children seperatly
+// then merge them together as one metadata object
 export function fetchMetadata(id) {
   return axios.get(`/api/plex/library/metadata/${id}`)
               .then((res) => normalizers.mediaContainer(res.data))
@@ -60,6 +62,7 @@ export function fetchMetadata(id) {
               })
 }
 
+// Fetch either season or all seasons then fetch each metadata for parent and grandparent keys
 export function fetchFullMetadata(id, videoType) {
   const subRoute = videoType === 'show' ? 'allLeaves' : 'children'
   return axios.get(`/api/plex/library/metadata/${id}/${subRoute}`)

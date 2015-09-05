@@ -36,7 +36,8 @@ class DestInfo {
 
   render() {
     const { dest: { path, used, total }, addedSize, startJob } = this.props
-    const displayUsed = addedSize / 1000 + used
+    // Plex is reporting in bytes, df is reporting in kilobtyes
+    const displayUsed = (addedSize / 1000) + used
     const percentUsed = displayUsed / total
 
     return (<Col md={12} style={{position: 'fixed', backgroundColor: '#FFF', zIndex: 1}}>

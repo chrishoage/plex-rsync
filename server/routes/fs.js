@@ -8,7 +8,8 @@ Promise.promisifyAll(fs)
 const dfAsync = Promise.promisify(df)
 
 const BASE_PATH = '/Volumes'
-
+// TODO: Modify df module to take custom flags. Pass -l to limit to local disks.
+// Remove df call for each item in the folder
 export function get({params}, res) {
   const paramsPath = Object.keys(params).map((key) => params[key]).join('/') || ''
   const fsPath = path.join(BASE_PATH, paramsPath)

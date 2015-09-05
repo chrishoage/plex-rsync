@@ -4,6 +4,8 @@ const {
   NODE_ENV = 'production'
 } = process.env
 
+// During development the bundle.js is being servied from webpack-hot-server in the gulpfile
+// so we must switch the source
 const bundleSrc = NODE_ENV === 'development' ? `http://${HOST}:${WEBPACK_PORT}` : ''
 const indexHtml = `
 <!DOCTYPE html>
