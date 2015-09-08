@@ -105,7 +105,6 @@ export function create({body, app}, res) {
   }, {}).then((rsyncOpts) => {
     rsyncOpts.include = ['*/', ...rsyncOpts.include]
     rsyncOpts.exclude = ['*']
-    rsyncOpts.shell = 'ssh'
     rsyncOpts.flags = ['a', 'v', 'z', 'm', 'stats', 'progress'] // dry 'n',
     rsyncOpts.destination = path.join(BASE_PATH, destPath)
     const job = startJob(rsyncOpts, app.get('socketio'))
@@ -121,13 +120,22 @@ export function remove({params: { id }}, res) {
   id = parseInt(id, 10)
   if (!jobs.has(id)) return res.status(404)
   const job = jobs.get(id)
-  jobs.delete(id)
+
   if (jobObjects.has(job.pid)) {
     const jobObject = jobObjects.get(job.pid)
-    jobObject.stdin.pause()
+    jobObject.on('close', () => {
+      jobObjects.delete(job.pid)
+      jobs.delete(id)
+      res.status(201)
+      console.log('remove and kill job', id, job.pid)
+    })
     jobObject.kill()
-    jobObjects.delete(job.pid)
+
+  } else {
+    jobs.delete(id)
+    res.status(201)
     console.log('remove job', id, job.pid)
   }
-  res.status(201)
+
+
 }
