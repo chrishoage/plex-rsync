@@ -113,8 +113,6 @@ export function create({body, app}, res) {
 
 }
 
-// FIXME: .kill() is causing the server processes to end too. Likely fix will be to
-// spawn rsync with {detached: true}. This will require a modification to node-rsync
 export function remove({params: { id }}, res) {
 
   id = parseInt(id, 10)
