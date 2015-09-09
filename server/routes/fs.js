@@ -24,7 +24,7 @@ export function get({params}, res) {
   const paramsPath = Object.keys(params).map((key) => params[key]).join('/') || ''
   const hasPath = paramsPath !== ''
   const dfOpts = {
-    file: `"${paramsPath}"`
+    file: hasPath ? `"${paramsPath}"` : ''
   }
   dfAsync(dfOpts).then((localMounts) => {
     if (!hasPath) {
