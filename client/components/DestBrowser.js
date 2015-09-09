@@ -73,7 +73,7 @@ class DestBrowser {
                   <ListGroupItem key={result.path} href="#" onClick={this.onSetDest(result)}>{result.path}</ListGroupItem>
                 )}
               </ListGroup>
-              <Button bsStyle="primary" onClick={::this.onConfirmDest}>Set Destination</Button>
+              <Button bsStyle="primary" disabled={!hasPath} onClick={::this.onConfirmDest}>Set Destination</Button>
             </Col>)
   }
 
