@@ -8,9 +8,9 @@ export const updateDest = createAction(UPDATE_DEST)
 export const requestDest = createAction(REQUEST_DEST)
 export const reciveDest = createAction(RECIVE_DEST)
 
-export function fetchDest({ path } = {path: '/'}) {
+export function fetchDest({ path }) {
   return (dispatch) => {
     dispatch(requestDest())
-    return axios.get(`/api/fs${path}`).then((res) => dispatch(reciveDest(res.data)))
+    return axios.get(`/api/fs/${path}`).then((res) => dispatch(reciveDest(res.data)))
   }
 }

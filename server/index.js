@@ -30,6 +30,7 @@ app.get('/api/rsync', routes.rsync.get)
 app.post('/api/rsync', routes.rsync.create)
 app.delete('/api/rsync/:id', routes.rsync.remove)
 
+app.get('/api/fs', routes.fs.get)
 app.get('/api/fs/*', routes.fs.get)
 
 server.listen(PORT, HOST, () => {

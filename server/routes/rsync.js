@@ -106,7 +106,7 @@ export function create({body, app}, res) {
     rsyncOpts.include = ['*/', ...rsyncOpts.include]
     rsyncOpts.exclude = ['*']
     rsyncOpts.flags = ['a', 'v', 'z', 'm', 'stats', 'progress'] // dry 'n',
-    rsyncOpts.destination = path.join(BASE_PATH, destPath)
+    rsyncOpts.destination = destPath
     const job = startJob(rsyncOpts, app.get('socketio'))
     res.json(job)
   })

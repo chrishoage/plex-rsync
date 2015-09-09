@@ -67,7 +67,8 @@ export function copyKeys(state = new Set(), {type, payload}) {
 }
 
 const Dest/*ination*/ = Record({
-  path: '/',
+  path: '',
+  mount: '',
   total: 0,
   used: 0,
   available: 0,

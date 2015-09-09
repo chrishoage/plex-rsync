@@ -47,19 +47,21 @@ class DestBrowser {
   }
 
   walkPath(i) {
-    const splitPath = this.props.path.split('/')
+    const { path } = this.props
+    if (path === '/') return ''
+    const splitPath = path.split('/')
     return splitPath.slice(0, i).join('/') || '/'
   }
 
   render() {
     const { results, path } = this.props
-    const splitPath = path.length === 1 ? [ROOT_PATH_LABEL] : path.split('/')
+    const splitPath = path === '' ? [ROOT_PATH_LABEL] : path.split('/')
     return (<Col md={12}>
               <PageHeader>Pick a destination folder</PageHeader>
               <ol className="breadcrumb">
               {splitPath.map((part, i) =>
                 <li key={i}>{splitPath.length - 1 === i ? <span>{part}</span>
-                                                : <a href="#" onClick={this.onSetDest({path: ::this.walkPath(i + 1)})}>{part}</a>
+                                                : <a href="#" onClick={this.onSetDest({path: ::this.walkPath(i + 1)})}>{part === '' ? '/' : part}</a>
                     }
                 </li>
               )}
