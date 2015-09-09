@@ -9,6 +9,7 @@ const dfAsync = Promise.promisify(df)
 
 const dfNormalize = (mount, paramsPath, folderPath = '') => {
   const {size: total} = mount
+  paramsPath = paramsPath.replace(mount.mount, '')
   folderPath = folderPath === '' ? mount.mount : path.join(mount.mount, paramsPath, folderPath)
   return {
     ...mount,
@@ -23,7 +24,7 @@ export function get({params}, res) {
   const paramsPath = Object.keys(params).map((key) => params[key]).join('/') || ''
   const hasPath = paramsPath !== ''
   const dfOpts = {
-    file: paramsPath
+    file: `"${paramsPath}"`
   }
   dfAsync(dfOpts).then((localMounts) => {
     if (!hasPath) {
