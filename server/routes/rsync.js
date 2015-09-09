@@ -48,7 +48,7 @@ function startJob(opts, io) {
     const job = jobs.get(id)
     const line = new Buffer(stdout).toString()
     console.log(line)
-    job.output += line
+    //job.output += line I think this hung the process
     if (job.status === 'PREPARING') {
       job.status = 'TRANSFERING'
     }
