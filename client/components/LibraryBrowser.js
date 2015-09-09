@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react'
-import { Glyphicon, ListGroup, ListGroupItem, PageHeader, Row, Col, Nav, NavItem } from 'react-bootstrap'
+import { Glyphicon, Button, ListGroup, ListGroupItem, PageHeader, Row, Col, Nav, NavItem } from 'react-bootstrap'
 import shouldPureComponentUpdate from 'react-pure-render/function'
 import Link from './Link'
 
@@ -29,16 +29,26 @@ class LibraryBrowser {
     }
   }
 
+  addAllMedia() {
+    const { list, addMedia } = this.props
+    const keys = list.map((l) => l.get('ratingKey')).toJSON()
+    console.log('addAllMedia', keys)
+    addMedia({keys})
+  }
+
   render() {
     const { list, copyList } = this.props
-    return (<ListGroup>
+    return (<div>
+            <Button onClick={::this.addAllMedia}>Add All Movies</Button>
+            <ListGroup>
               {list && list.toJSON().map(({ratingKey, title}, i) => {
                 const hasCopyList = copyList.includes(ratingKey)
                 return (<Link component={ListGroupItem} key={ratingKey} to={`/library/metadata/${ratingKey}`}>
                           <Glyphicon glyph={hasCopyList ? 'minus' : 'plus'} onClick={this.onToggleMedia(ratingKey, hasCopyList)} /> {title}
                         </Link>)
               })}
-            </ListGroup>)
+            </ListGroup>
+            </div>)
   }
 
 }
