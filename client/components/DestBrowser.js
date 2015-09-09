@@ -55,7 +55,8 @@ class DestBrowser {
 
   render() {
     const { results, path } = this.props
-    const splitPath = path === '' ? [ROOT_PATH_LABEL] : path.split('/')
+    const hasPath = path !== ''
+    const splitPath = hasPath ? path.split('/') : [ROOT_PATH_LABEL]
     return (<Col md={12}>
               <PageHeader>Pick a destination folder</PageHeader>
               <ol className="breadcrumb">
@@ -67,7 +68,7 @@ class DestBrowser {
               )}
               </ol>
               <ListGroup>
-                <ListGroupItem key="up" href="#" onClick={::this.onUpDest}>..</ListGroupItem>
+                {hasPath ? <ListGroupItem key="up" href="#" onClick={::this.onUpDest}>..</ListGroupItem> : {/*ListGroup can't take anything other than a react element as a child*/}}
                 {results.map((result, i) =>
                   <ListGroupItem key={result.path} href="#" onClick={this.onSetDest(result)}>{result.path}</ListGroupItem>
                 )}
