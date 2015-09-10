@@ -29,26 +29,16 @@ class LibraryBrowser {
     }
   }
 
-  addAllMedia() {
-    const { list, addMedia } = this.props
-    const keys = list.map((l) => l.get('ratingKey')).toJSON()
-    console.log('addAllMedia', keys)
-    addMedia({keys})
-  }
-
   render() {
     const { list, copyList } = this.props
-    return (<div>
-            <Button onClick={::this.addAllMedia}>Add All Movies</Button>
-            <ListGroup>
+    return (<ListGroup>
               {list && list.toJSON().map(({ratingKey, title}, i) => {
                 const hasCopyList = copyList.includes(ratingKey)
                 return (<Link component={ListGroupItem} key={ratingKey} to={`/library/metadata/${ratingKey}`}>
                           <Glyphicon glyph={hasCopyList ? 'minus' : 'plus'} onClick={this.onToggleMedia(ratingKey, hasCopyList)} /> {title}
                         </Link>)
               })}
-            </ListGroup>
-            </div>)
+            </ListGroup>)
   }
 
 }

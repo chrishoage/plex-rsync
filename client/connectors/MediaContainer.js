@@ -4,10 +4,10 @@ import { bindActionCreators } from 'redux'
 import { Glyphicon, ListGroup, ListGroupItem, PageHeader, Row, Col, Nav, NavItem } from 'react-bootstrap'
 import Link from 'components/Link'
 import LibraryBrowser from 'components/LibraryBrowser'
-import { fetchMetadata, fetchSection, addMedia, addAllMedia, removeAllMedia } from 'actions/libraryActions'
+import * as libraryActions from 'actions/libraryActions'
 import { libraryResultsSelector } from 'selectors'
 
-@connect(libraryResultsSelector, { fetchMetadata, fetchSection, addMedia, addAllMedia, removeAllMedia })
+@connect(libraryResultsSelector, libraryActions)
 class MediaContainer {
 
   static propTypes = {
@@ -46,11 +46,11 @@ class MediaContainer {
   }
 
   render() {
-    const { list, copyList, addAllMedia, addMedia, removeAllMedia } = this.props
+    const { list, copyList, addAllMedia, removeAllMedia } = this.props
 
     return (<Row>
               <Col md={12}>
-                <LibraryBrowser list={list} copyList={copyList} addMedia={addMedia} addAllMedia={addAllMedia} removeAllMedia={removeAllMedia} />
+                <LibraryBrowser list={list} copyList={copyList} {...libraryActions} />
               </Col>
             </Row>)
   }
