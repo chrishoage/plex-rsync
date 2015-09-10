@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { Glyphicon, ListGroup, ListGroupItem, PageHeader, Row, Col, Nav, NavItem } from 'react-bootstrap'
+import { Glyphicon, ButtonGroup, Button, PageHeader, Row, Col, Nav, NavItem } from 'react-bootstrap'
 import Link from 'components/Link'
 import LibraryBrowser from 'components/LibraryBrowser'
 import * as libraryActions from 'actions/libraryActions'
@@ -45,11 +45,26 @@ class MediaContainer {
     }
   }
 
-  render() {
-    const { list, copyList, addAllMedia, removeAllMedia } = this.props
+  toggleAllMedia() {
+    const { addAllMedia, removeAllMedia, list, copyList } = this.props
+    if (copyList.length) {
+      removeAllMedia()
+    } else {
+      const metadataIds = list.map((l) => l.get('ratingKey')).toJS()
+      console.log('handleAddAllMedia', metadataIds)
+      addAllMedia(metadataIds)
+    }
+  }
 
+  render() {
+    const { list, copyList } = this.props
+    const hasCopyList = copyList && copyList.length
+    console.log(hasCopyList, copyList)
     return (<Row>
               <Col md={12}>
+                <ButtonGroup>
+                  <Button onClick={::this.toggleAllMedia}><Glyphicon glyph={hasCopyList ? 'minus' : 'plus'} /> {hasCopyList ? 'Remove' : 'Add'} All Media</Button>
+                </ButtonGroup>
                 <LibraryBrowser list={list} copyList={copyList} {...libraryActions} />
               </Col>
             </Row>)

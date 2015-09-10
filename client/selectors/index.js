@@ -81,7 +81,9 @@ export const copyListSelector = selectorCreator(
     const videos = entities.get('videos')
     const copyVideos = copyKeys.map((key) => videos.get(key))
     const copyList = copyVideos.reduce((coll, key, val) => {
-      return coll.concat(val.get('ratingKey'), val.get('parentRatingKey'), val.get('grandparentRatingKey'))
+      const possibleKeys = [val.get('ratingKey'), val.get('parentRatingKey'), val.get('grandparentRatingKey')]
+      const keys = possibleKeys.filter(isDefined)
+      return coll.concat(...keys)
     }, [])
 
     return copyList

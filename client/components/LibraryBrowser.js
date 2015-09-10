@@ -9,29 +9,29 @@ class LibraryBrowser {
     location: PropTypes.object,
     list: PropTypes.object,
     copyList: PropTypes.array,
-    addAllMedia: PropTypes.func.isRequired,
-    removeAllMedia: PropTypes.func.isRequired
+    addMedia: PropTypes.func.isRequired,
+    removeMedia: PropTypes.func.isRequired
   }
 
   shouldComponentUpdate = shouldPureComponentUpdate
 
   onToggleMedia(metadata, hasCopyList) {
-    const { addAllMedia, removeAllMedia } = this.props
+    const { addMedia, removeMedia } = this.props
 
     return (event) => {
       event.preventDefault()
       event.stopPropagation()
       if (hasCopyList) {
-        removeAllMedia(metadata)
+        removeMedia(metadata)
       } else {
-        addAllMedia(metadata)
+        addMedia(metadata)
       }
     }
   }
 
   render() {
     const { list, copyList } = this.props
-    return (<ListGroup>
+    return (<ListGroup style={{marginTop: '20px'}}>
               {list && list.toJSON().map(({ratingKey, title}, i) => {
                 const hasCopyList = copyList.includes(ratingKey)
                 return (<Link component={ListGroupItem} key={ratingKey} to={`/library/metadata/${ratingKey}`}>

@@ -13,6 +13,7 @@ export default createActionTypes([
   'RECIVE_METADATA',
   'ADD_MEDIA',
   'REMOVE_MEDIA',
+  'CLEAR_MEDIA',
   // Sync Actions
   'REQUEST_JOBS',
   'RECIVE_JOBS',
@@ -21,4 +22,5 @@ export default createActionTypes([
   'PROGRESS_UPDATE',
   'REQUEST_START_JOB',
   'RECIVE_START_JOB'
+
 ])

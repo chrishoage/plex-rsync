@@ -3,6 +3,7 @@ import {createAction} from 'redux-actions'
 import axios from 'axios'
 import { fromJS } from 'immutable'
 import * as WebAPI from 'utils/WebAPI'
+import { isDefined } from 'utils/functions'
 import {
           ADD_MEDIA,
           REMOVE_MEDIA,
@@ -11,7 +12,8 @@ import {
           REQUEST_METADATA,
           RECIVE_LIBRARY,
           RECIVE_SECTION,
-          RECIVE_METADATA
+          RECIVE_METADATA,
+          CLEAR_MEDIA
         } from 'constants/ActionTypes'
 
 
@@ -69,13 +71,13 @@ const pickKeys = (videos, metadataId, videoType) => {
   }).map((video) => video.get('ratingKey')).toArray()
 }
 
-export const addMedia = createAction(ADD_MEDIA)
+export const addMediaKeys = createAction(ADD_MEDIA)
 
 // Add Videos with media/parts to stage for copy
 // The Plex API does not include grandparent and parent key's on the season listing
 // so we have to fetch each individual metadata to get full information.
 // This could be simplified if the Plex API were consistent in the data it return
-export function addAllMedia(metadataId) {
+export function addMedia(metadataId) {
 
   return (dispatch, getState) => {
     const state = getState()
@@ -85,13 +87,13 @@ export function addAllMedia(metadataId) {
     const hasGrandparentId = entities.hasIn(['videos', metadataId, 'grandparentRatingKey'])
 
     if (videoType === MediaTypes.MOVIE || (videoType === MediaTypes.EPISODE && hasGrandparentId)) {
-      return dispatch(addMedia({
+      return dispatch(addMediaKeys({
         keys: [metadataId]
       }))
     }
 
     if (videoType === MediaTypes.EPISODE) {
-      return WebAPI.fetchMetadata(metadataId).then((data) => dispatch(addMedia({
+      return WebAPI.fetchMetadata(metadataId).then((data) => dispatch(addMediaKeys({
         entities: data.entities,
         keys: data.result.videos
       })))
@@ -101,14 +103,14 @@ export function addAllMedia(metadataId) {
     const addKeys = pickKeys(videos, metadataId, videoType)
 
     if (addKeys.length) {
-      return dispatch(addMedia({
+      return dispatch(addMediaKeys({
         keys: addKeys
       }))
     }
 
     return WebAPI.fetchFullMetadata(metadataId, videoType).then((data) => {
       const { entities, result: { videos } } = data
-      dispatch(addMedia({
+      dispatch(addMediaKeys({
         entities,
         keys: videos
       }))
@@ -117,9 +119,30 @@ export function addAllMedia(metadataId) {
   }
 }
 
-export const removeMedia = createAction(REMOVE_MEDIA)
+export function addAllMedia(metadataIds = []) {
+  return (dispatch, getState) => {
+    const { entities } = getState()
+    const isMovies = metadataIds.map((metadataId) =>
+                                             entities.getIn(['videos', metadataId],
+                                             entities.getIn(['directories', metadataId]))
+                                )
+                                .every((video) => video.get('type') === MediaTypes.MOVIE)
 
-export function removeAllMedia(metadataId) {
+    console.log('isMovies', isMovies, metadataIds)
+    if (isMovies) {
+      return dispatch(addMediaKeys({
+        keys: metadataIds
+      }))
+    }
+
+    return metadataIds.forEach((metadataId) => dispatch(addMedia(metadataId)))
+  }
+}
+
+
+export const removeMediaKeys = createAction(REMOVE_MEDIA)
+
+export function removeMedia(metadataId) {
   return (dispatch, getState) => {
     const state = getState()
     const { entities } = state
@@ -136,3 +159,5 @@ export function removeAllMedia(metadataId) {
 
   }
 }
+
+export const removeAllMedia = createAction(CLEAR_MEDIA)
