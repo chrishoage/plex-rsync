@@ -99,7 +99,7 @@ export function create({body, app}, res) {
       if (!opts.source.includes(source)) {
         opts.source.push(source)
       }
-      opts.include.push(val.replace(fixedMount, ''))
+      opts.include.push(decodeURIComponent(val.replace(fixedMount, '')))
       return opts
     })
   }, {}).then((rsyncOpts) => {
