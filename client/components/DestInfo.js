@@ -42,7 +42,7 @@ class DestInfo {
 
     return (<Col md={12} style={{position: 'fixed', backgroundColor: '#FFF', zIndex: 1}}>
               <PageHeader>{path}</PageHeader>
-              <ProgressBar striped bsStyle={this.sizeWarningStates(percentUsed)} now={displayUsed} max={total} label={`${Math.round(displayUsed / PROGRESS_LABEL_DEVIDER)}GB used`} />
+              <ProgressBar striped bsStyle={this.sizeWarningStates(percentUsed)} now={displayUsed} max={total} label={`${Math.round(displayUsed / PROGRESS_LABEL_DEVIDER)}GB used / ${Math.round(total / PROGRESS_LABEL_DEVIDER)}GB`} />
               <ButtonGroup>
                 <Button onClick={::this.onChangeDest}><Glyphicon glyph="edit" /> Change Destination</Button>
                 <Button onClick={startJob}><Glyphicon glyph="transfer" /> Start Sync Job</Button>

@@ -128,7 +128,7 @@ export function addAllMedia(metadataIds = []) {
                                 )
                                 .every((video) => video.get('type') === MediaTypes.MOVIE)
 
-    console.log('isMovies', isMovies, metadataIds)
+
     if (isMovies) {
       return dispatch(addMediaKeys({
         keys: metadataIds
@@ -153,7 +153,7 @@ export function removeMedia(metadataId) {
 
     const removeKeys = pickKeys(videos, metadataId, videoType)
 
-    dispatch(removeMedia({
+    dispatch(removeMediaKeys({
       keys: removeKeys
     }))
 

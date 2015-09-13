@@ -51,21 +51,21 @@ class MediaContainer {
       removeAllMedia()
     } else {
       const metadataIds = list.map((l) => l.get('ratingKey')).toJS()
-      console.log('handleAddAllMedia', metadataIds)
+
       addAllMedia(metadataIds)
     }
   }
 
   render() {
-    const { list, copyList } = this.props
+    const { list, copyList, ...actions } = this.props
     const hasCopyList = copyList && copyList.length
-    console.log(hasCopyList, copyList)
+
     return (<Row>
               <Col md={12}>
                 <ButtonGroup>
                   <Button onClick={::this.toggleAllMedia}><Glyphicon glyph={hasCopyList ? 'minus' : 'plus'} /> {hasCopyList ? 'Remove' : 'Add'} All Media</Button>
                 </ButtonGroup>
-                <LibraryBrowser list={list} copyList={copyList} {...libraryActions} />
+                <LibraryBrowser list={list} copyList={copyList} {...actions} />
               </Col>
             </Row>)
   }

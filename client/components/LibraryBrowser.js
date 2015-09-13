@@ -21,6 +21,7 @@ class LibraryBrowser {
     return (event) => {
       event.preventDefault()
       event.stopPropagation()
+
       if (hasCopyList) {
         removeMedia(metadata)
       } else {
