@@ -18,7 +18,7 @@ const io = SocketIO(server)
 app.set('socketio', io)
 app.set('server', server)
 
-app.use(bodyParser.json())
+app.use(bodyParser.json({limit: '5mb'}))
 
 app.use(express.static('dist'))
 
