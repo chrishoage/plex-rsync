@@ -89,7 +89,7 @@ export function create({body, app}, res) {
 
   Promise.reduce(partsList, (opts, val) => {
     const dfOpts = {
-      file: `"${val}"`
+      file: `"${decodeURIComponent(val)}"`
     }
     return dfAsync(dfOpts).then(([{mount}]) => {
       opts.source = Array.isArray(opts.source) ? opts.source : []
