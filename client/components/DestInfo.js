@@ -39,10 +39,10 @@ class DestInfo {
     // Plex is reporting in bytes, df is reporting in kilobtyes
     const displayUsed = (addedSize / 1000) + used
     const percentUsed = displayUsed / total
-
+    console.log(percentUsed, 1)
     return (<Col md={12} style={{position: 'fixed', backgroundColor: '#FFF', zIndex: 1}}>
               <PageHeader>{path}</PageHeader>
-              <ProgressBar striped bsStyle={this.sizeWarningStates(percentUsed)} now={displayUsed} max={total} label={`${Math.round(displayUsed / PROGRESS_LABEL_DEVIDER)}GB used / ${Math.round(total / PROGRESS_LABEL_DEVIDER)}GB`} />
+              <ProgressBar striped bsStyle={this.sizeWarningStates(percentUsed)} now={percentUsed > 1 ? 1 : percentUsed} max={1} label={`${Math.round(displayUsed / PROGRESS_LABEL_DEVIDER)}GB used / ${Math.round(total / PROGRESS_LABEL_DEVIDER)}GB`} />
               <ButtonGroup>
                 <Button onClick={::this.onChangeDest}><Glyphicon glyph="edit" /> Change Destination</Button>
                 <Button onClick={startJob}><Glyphicon glyph="transfer" /> Start Sync Job</Button>
