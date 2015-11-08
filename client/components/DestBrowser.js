@@ -68,7 +68,7 @@ class DestBrowser extends Component {
               )}
               </ol>
               <ListGroup>
-                {hasPath ? <ListGroupItem key="up" href="#" onClick={::this.onUpDest}>..</ListGroupItem> : {/*ListGroup can't take anything other than a react element as a child*/}}
+                {hasPath && <ListGroupItem key="up" href="#" onClick={::this.onUpDest}>..</ListGroupItem>}
                 {results.map((result, i) =>
                   <ListGroupItem key={i} href="#" onClick={this.onSetDest(result)}>{result.path}</ListGroupItem>
                 )}
