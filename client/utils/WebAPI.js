@@ -68,13 +68,9 @@ export function fetchFullMetadata(id, videoType) {
   return axios.get(`/api/plex/library/metadata/${id}/${subRoute}`)
               .then((res) => res.data)
               .then((data) => {
-                const promises = data.videos.map(({ratingKey}) => fetchMetadata(ratingKey))
-                return Promise.all(promises).then((results) => {
-                  return results.reduce((coll, res) => {
-                    return merge(coll, res, (a, b) => {
-                      if (Array.isArray(a)) return a.concat(b)
-                    })
-                  }, {})
-                })
+                data.videos = data.videos.map((video) => merge(video, {
+                  grandparentRatingKey: id
+                }))
+                return normalizers.mediaContainer(data)
               })
 }
