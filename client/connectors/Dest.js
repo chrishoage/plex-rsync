@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react'
+import React, { Component, PropTypes } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import * as destActions from 'actions/destActions'
@@ -10,7 +10,7 @@ import shouldPureComponentUpdate from 'react-pure-render/function'
 import { destInfoSelector } from 'selectors'
 
 @connect(destInfoSelector)
-class Dest {
+class Dest extends Component {
 
   static propTypes = {
     dest: PropTypes.object.isRequired,

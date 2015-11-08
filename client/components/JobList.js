@@ -1,9 +1,9 @@
-import React, { PropTypes } from 'react'
+import React, { Component, PropTypes } from 'react'
 import { Table } from 'react-bootstrap'
 import shouldPureComponentUpdate from 'react-pure-render/function'
 import JobListItem from './JobListItem'
 
-class JobList {
+class JobList extends Component {
 
   static propTypes = {
     children: PropTypes.any,

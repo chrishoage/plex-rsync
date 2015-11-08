@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react'
+import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { Glyphicon, ButtonGroup, Button, Table, PageHeader, Row, Col, Nav, NavItem } from 'react-bootstrap'
@@ -6,11 +6,10 @@ import JobList from 'components/JobList'
 import { fetchLibrary } from 'actions/libraryActions'
 import * as rsyncActions from 'actions/rsyncActions'
 import shouldPureComponentUpdate from 'react-pure-render/function'
-import { Link } from 'react-router'
 import { runningJobsSelector } from 'selectors'
 
 @connect(runningJobsSelector, rsyncActions)
-class RunningJobs {
+class RunningJobs extends Component {
 
   static propTypes = {
     children: PropTypes.any,

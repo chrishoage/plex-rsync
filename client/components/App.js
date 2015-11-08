@@ -1,19 +1,19 @@
-import React from 'react'
-import { Grid, Navbar, Nav, NavItem } from 'react-bootstrap'
-import { RouteHandler }  from 'react-router'
+import React, { Component } from 'react'
+import { Grid, Navbar, Nav, NavItem, NavBrand } from 'react-bootstrap'
 import shouldPureComponentUpdate from 'react-pure-render/function'
-import Link from './Link'
+import { LinkContainer } from 'react-router-bootstrap'
 
-class App {
+class App extends Component {
 
   shouldComponentUpdate = shouldPureComponentUpdate
 
   render() {
     return (<Grid fluid={true} style={{paddingTop: '40px'}}>
-              <Navbar brand="Plex Rsync" fixedTop={true} fluid={true}>
+              <Navbar fixedTop={true} fluid={true}>
+                <NavBrand>Plex Rsync</NavBrand>
                 <Nav>
-                  <Link component={NavItem} to="/library/sections">Start Job</Link>
-                  <Link component={NavItem} to="/jobs">Running Jobs</Link>
+                  <LinkContainer to="/library/sections"><NavItem>Start Job</NavItem></LinkContainer>
+                  <LinkContainer to="/jobs"><NavItem>Running Jobs</NavItem></LinkContainer>
                 </Nav>
               </Navbar>
               {this.props.children}

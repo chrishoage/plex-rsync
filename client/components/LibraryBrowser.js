@@ -1,9 +1,9 @@
-import React, { PropTypes } from 'react'
+import React, { PropTypes, Component } from 'react'
 import { Glyphicon, Button, ListGroup, ListGroupItem, PageHeader, Row, Col, Nav, NavItem } from 'react-bootstrap'
 import shouldPureComponentUpdate from 'react-pure-render/function'
-import Link from './Link'
+import { LinkContainer } from 'react-router-bootstrap'
 
-class LibraryBrowser {
+class LibraryBrowser extends Component {
 
   static propTypes = {
     location: PropTypes.object,
@@ -35,9 +35,9 @@ class LibraryBrowser {
     return (<ListGroup style={{marginTop: '20px'}}>
               {list && list.toJSON().map(({ratingKey, title}, i) => {
                 const hasCopyList = copyList.includes(ratingKey)
-                return (<Link component={ListGroupItem} key={ratingKey} to={`/library/metadata/${ratingKey}`}>
-                          <Glyphicon glyph={hasCopyList ? 'minus' : 'plus'} onClick={this.onToggleMedia(ratingKey, hasCopyList)} /> {title}
-                        </Link>)
+                return (<LinkContainer key={ratingKey} to={`/library/metadata/${ratingKey}`}>
+                          <ListGroupItem><Glyphicon glyph={hasCopyList ? 'minus' : 'plus'} onClick={this.onToggleMedia(ratingKey, hasCopyList)} /> {title}</ListGroupItem>
+                        </LinkContainer>)
               })}
             </ListGroup>)
   }

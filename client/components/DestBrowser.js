@@ -1,10 +1,10 @@
-import React, { PropTypes } from 'react'
+import React, { Component, PropTypes } from 'react'
 import { Well, ListGroup, ListGroupItem, PageHeader, Row, Col, Button } from 'react-bootstrap'
 import shouldPureComponentUpdate from 'react-pure-render/function'
 
 const ROOT_PATH_LABEL = 'All Drives'
 
-class DestBrowser {
+class DestBrowser extends Component {
 
   static propTypes = {
     path: PropTypes.string.isRequired,
@@ -70,7 +70,7 @@ class DestBrowser {
               <ListGroup>
                 {hasPath ? <ListGroupItem key="up" href="#" onClick={::this.onUpDest}>..</ListGroupItem> : {/*ListGroup can't take anything other than a react element as a child*/}}
                 {results.map((result, i) =>
-                  <ListGroupItem key={result.path} href="#" onClick={this.onSetDest(result)}>{result.path}</ListGroupItem>
+                  <ListGroupItem key={i} href="#" onClick={this.onSetDest(result)}>{result.path}</ListGroupItem>
                 )}
               </ListGroup>
               <Button bsStyle="primary" disabled={!hasPath} onClick={::this.onConfirmDest}>Set Destination</Button>

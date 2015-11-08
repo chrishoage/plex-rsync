@@ -1,4 +1,4 @@
-import selectorCreator from 'utils/selectorCreator'
+import { createSelector } from 'reselect'
 import { isDefined } from 'utils/functions'
 
 export const destSelector = (state) => state.dest
@@ -7,7 +7,7 @@ export const entitiesSelector = (state, props) => state.entities
 export const librarySelector = (state) => state.library
 export const copyKeysSelector = (state) => state.copyKeys
 
-export const jobListSelector = selectorCreator(
+export const jobListSelector = createSelector(
   [entitiesSelector, jobsSelector],
   (entities, jobs) => {
     const bag = entities.get('jobs')
@@ -15,14 +15,14 @@ export const jobListSelector = selectorCreator(
   }
 )
 
-export const runningJobsCountSelector = selectorCreator(
+export const runningJobsCountSelector = createSelector(
   [jobListSelector],
   (jobList) => {
     return jobList.filter((job) => job.get('status') !== 'COMPLETED').size
   }
 )
 
-export const runningJobsSelector = selectorCreator(
+export const runningJobsSelector = createSelector(
   [jobListSelector, runningJobsCountSelector],
   (jobList, runningJobsCount) => {
     return {
@@ -32,7 +32,7 @@ export const runningJobsSelector = selectorCreator(
   }
 )
 
-export const copyPartsListSelector = selectorCreator(
+export const copyPartsListSelector = createSelector(
   [copyKeysSelector, entitiesSelector],
   (copyKeys, entities) => {
     const videos = entities.get('videos')
@@ -48,7 +48,7 @@ export const copyPartsListSelector = selectorCreator(
   }
 )
 
-export const spaceUsedSelector = selectorCreator(
+export const spaceUsedSelector = createSelector(
   [entitiesSelector, copyKeysSelector],
   (entities, copyKeys) => {
     const parts = entities.get('parts')
@@ -64,7 +64,7 @@ export const spaceUsedSelector = selectorCreator(
   }
 )
 
-export const destInfoSelector = selectorCreator(
+export const destInfoSelector = createSelector(
   [destSelector, spaceUsedSelector],
   (dest, addedUsed) => {
     return {
@@ -74,7 +74,7 @@ export const destInfoSelector = selectorCreator(
   }
 )
 
-export const copyListSelector = selectorCreator(
+export const copyListSelector = createSelector(
   [entitiesSelector, copyKeysSelector],
   (entities, copyKeys) => {
 
@@ -90,7 +90,7 @@ export const copyListSelector = selectorCreator(
   }
 )
 
-export const libraryResultsSelector = selectorCreator(
+export const libraryResultsSelector = createSelector(
   [entitiesSelector, librarySelector, copyListSelector],
   (entities, library, copyList) => {
     const entityKey = library.has('directories') ? 'directories' : 'videos'
@@ -107,7 +107,7 @@ export const libraryResultsSelector = selectorCreator(
   }
 )
 
-export const librarySectionsSelector = selectorCreator(
+export const librarySectionsSelector = createSelector(
   [entitiesSelector, librarySelector],
   (entities, library) => {
     const bag = entities.get('libraries')

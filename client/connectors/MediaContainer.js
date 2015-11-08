@@ -1,14 +1,13 @@
-import React, { PropTypes } from 'react'
+import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { Glyphicon, ButtonGroup, Button, PageHeader, Row, Col, Nav, NavItem } from 'react-bootstrap'
-import Link from 'components/Link'
 import LibraryBrowser from 'components/LibraryBrowser'
 import * as libraryActions from 'actions/libraryActions'
 import { libraryResultsSelector } from 'selectors'
 
 @connect(libraryResultsSelector, libraryActions)
-class MediaContainer {
+class MediaContainer extends Component {
 
   static propTypes = {
     result: PropTypes.object,

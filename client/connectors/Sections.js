@@ -1,14 +1,14 @@
-import React, { PropTypes } from 'react'
+import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { ListGroup, ListGroupItem, PageHeader, Row, Col, Nav, NavItem } from 'react-bootstrap'
 import { fetchLibrary } from 'actions/libraryActions'
 import shouldPureComponentUpdate from 'react-pure-render/function'
-import Link from 'components/Link'
+import { LinkContainer } from 'react-router-bootstrap'
 import { librarySectionsSelector } from 'selectors'
 
 @connect(librarySectionsSelector, {fetchLibrary})
-class Sections {
+class Sections extends Component {
 
   static propTypes = {
     fetchLibrary: PropTypes.func.isRequired,
@@ -33,9 +33,9 @@ class Sections {
               <Col md={12}>
                 <ListGroup>
                   {list && list.map((result, i) =>
-                    <Link component={ListGroupItem} key={result.get('key')} to={`/library/sections/${result.get('key')}`}>
-                      {result.get('title')}
-                    </Link>)}
+                    <LinkContainer key={result.get('key')} to={`/library/sections/${result.get('key')}`}>
+                      <ListGroupItem>{result.get('title')}</ListGroupItem>
+                    </LinkContainer>)}
                 </ListGroup>
               </Col>
             </Row>)

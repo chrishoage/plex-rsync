@@ -116,10 +116,10 @@ function generateWebpackConfig(env) {
 
 const webpackConfig = generateWebpackConfig(NODE_ENV)
 
-gulp.task('clean', (callback) => {
-  del([
+gulp.task('clean', () => {
+  return del([
     paths.dist
-  ], callback)
+  ])
 })
 
 gulp.task('lint', () => {

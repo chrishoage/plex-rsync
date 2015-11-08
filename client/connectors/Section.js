@@ -1,10 +1,9 @@
-import React, { PropTypes } from 'react'
+import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { Glyphicon, ListGroup, ListGroupItem, PageHeader, Row, Col, Nav, NavItem } from 'react-bootstrap'
 import { fetchSection, addAllMedia } from 'actions/libraryActions'
 import shouldPureComponentUpdate from 'react-pure-render/function'
-import Link from 'components/Link'
 import LibraryBrowser from 'components/LibraryBrowser'
 
 @connect(({library}) => {
@@ -25,7 +24,7 @@ import LibraryBrowser from 'components/LibraryBrowser'
     copyList
   }
 })
-class Section {
+class Section extends Component {
 
   static propTypes = {
     dispatch: PropTypes.func.isRequired,

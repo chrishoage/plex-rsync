@@ -1,10 +1,10 @@
-import React, { PropTypes } from 'react'
+import React, { Component, PropTypes } from 'react'
 import { Glyphicon, Well, ButtonGroup, Button, ProgressBar, PageHeader, Row, Col } from 'react-bootstrap'
 import shouldPureComponentUpdate from 'react-pure-render/function'
 
 const PROGRESS_LABEL_DEVIDER = 1000000 // GB
 
-class DestInfo {
+class DestInfo extends Component {
 
   static propTypes = {
     updateDest: PropTypes.func,

@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react'
+import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { ListGroup, ListGroupItem, PageHeader, Row, Col, Nav, NavItem } from 'react-bootstrap'
@@ -12,7 +12,7 @@ import { Link } from 'react-router'
     library
   }
 })
-class Library {
+class Library extends Component {
 
   static propTypes = {
     dispatch: PropTypes.func.isRequired,
